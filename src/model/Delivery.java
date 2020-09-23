@@ -15,11 +15,13 @@ public class Delivery {
 	private Product[] products;
 	private int[] quantities;
 	
-	public Delivery(int clientId, String restaurantNit, Product[] products, int[] quantities) {
+	public Delivery(int deliveryCode, Date dateAndTime, int clientId, String restaurantNit, Product[] products, int[] quantities) {
 		this.clientId = clientId;
 		this.restaurantNit = restaurantNit;
 		this.products = products;
 		this.quantities = quantities;
+		this.deliveryCode = deliveryCode;
+		this.dateAndTime= dateAndTime;
 	}
 
 	public String getOrderState() {
