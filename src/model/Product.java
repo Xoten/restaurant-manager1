@@ -3,12 +3,21 @@ package model;
 import java.io.Serializable;
 
 public class Product implements Serializable {
-	
+	public final static long serialVersionUID = 1;
 	private int code;
 	private String name;
 	private String description;
 	private double price;
 	private int restaurantNit;
+	private int quantities;
+	
+	public Product(int code, int quantities) {
+		
+		this.quantities = quantities;
+		this.code = quantities;
+		
+		
+	}
 	
 	public Product(int code, String name, String description, double price, int restaurantNit) {
 		this.code = code;
@@ -48,6 +57,11 @@ public class Product implements Serializable {
 
 	public int getRestaurantNit() {
 		return restaurantNit;
+	}
+	
+	public int getQuantities() {
+		
+		return quantities;
 	}
 	
 	

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Client implements Serializable, Comparable<Client> {
 	
+	public final static long serialVersionUID = 1;
 	private int type;
 	private String idNumber;
 	private String Name;
