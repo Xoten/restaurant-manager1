@@ -1,5 +1,7 @@
 package ui;
 import model.*;
+
+import java.util.Date;
 import java.util.Scanner;
 
 public class Menu {
@@ -8,11 +10,14 @@ public class Menu {
 	private Scanner sc;
 	private Restaurant r1;
 	private Manager m1;
-	
+	private Date d1;
+	private Delivery dv1;
 	public Menu() {
 		sc = new Scanner(System.in);
 		r1 = new Restaurant();
 		m1 = new Manager();
+		d1 = new Date();
+		
 	}
 	
 	public void startMenu() {
@@ -71,7 +76,14 @@ public class Menu {
 			case 2:
 				registerClient();
 				break;
-			case 3: exitProgram(); break;
+			case 3: 
+				
+				registerProduct();
+				
+			 break;
+			 
+			case 22:
+				exitProgram();
 			default: break;
 		}
 	}
@@ -148,37 +160,36 @@ public class Menu {
 		private void registerDelivery() {
 			
 			System.out.println("Adding Delivery ...");
-			System.out.print("Please enter the deliveryCode: ");
-			int deliveryCode = Integer.parseInt(sc.nextLine());
+			
+			int deliveryCode = (int)(100000*Math.random());
 			System.out.print("Please enter the restaurant nit ");
 			int restaurantnit = Integer.parseInt(sc.nextLine());
 			System.out.print("Please enter the cliend id ");
 			int clientId = Integer.parseInt(sc.nextLine());
+			
+			 int date = d1.getDate();
+			 int hour = d1.getHours();
+			 
+			 
+			
+			r1.addDelivery(deliveryCode, date, hour, clientId, restaurantnit);
 			System.out.print("Please enter the amount of products ");
+			 int amount = Integer.parseInt(sc.nextLine());
 			
-			int amount = Integer.parseInt(sc.nextLine());
-			
-			int[] products = new int[amount];
-			int[] quantities = new int[amount];
-			
-			for(int i = 0; i< amount ; i++) {
+			for(int i = 0; i<amount; i++) {
+				System.out.print("Please enter the code of the product ");
 				
-				System.out.println("Enter the product code No. " + i);
-				products[i] = Integer.parseInt(sc.nextLine());
-				System.out.print("Enter the quantities of that prodcut");
-				quantities[i] = Integer.parseInt(sc.nextLine());
+				int code = Integer.parseInt(sc.nextLine());
 				
+				System.out.print("Please enter the amount of the product ");
+				
+				int quantities = Integer.parseInt(sc.nextLine());
+				 dv1.addProductToOrder(code, quantities);
 			}
+			   
+			   
 			
-			
-			
-			
-			System.out.print("Please enter your Lastname ");
-			String Lastname = sc.nextLine();
-			System.out.print("Please enter your phoneNumber ");
-			int phoneNumber = Integer.parseInt(sc.nextLine());
-			System.out.print("Please enter your adress");
-			String adress = sc.nextLine();
+	
 			
 			
 			
