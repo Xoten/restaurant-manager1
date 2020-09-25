@@ -82,6 +82,11 @@ public class Menu {
 				
 			 break;
 			 
+			case 4:
+				
+				registerDelivery();
+				break;
+			 
 			case 22:
 				exitProgram();
 			default: break;
@@ -96,7 +101,7 @@ public class Menu {
 		
 		System.out.println("Adding Client ...");
 		System.out.print("Please enter your type of document: ");
-		int type = Integer.parseInt(sc.nextLine());
+		String type = sc.nextLine();
 		System.out.print("Please enter your id number ");
 		String idNumber = sc.nextLine();
 		System.out.print("Please enter your name ");

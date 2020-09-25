@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 public class Restaurant implements Serializable  {
-
+    public final static long serialVersionUID = 1;
 	private String name;
 	private int nit;
 	private String adminName;
@@ -18,7 +18,6 @@ public class Restaurant implements Serializable  {
 	private List<Product> products;
 	private List<Delivery> deliveries;
 	private final static String SEPARATOR = ";";
-
 	public Restaurant(String name, int nit, String adminName) {
 
 		this.name = name;
@@ -66,7 +65,7 @@ public class Restaurant implements Serializable  {
 		products.add(pd);
 	}
 	
-	public void addClient(int type, String idNumber, String Name,String Lastname, int phoneNumber, String adress) {
+	public void addClient(String type, String idNumber, String Name,String Lastname, int phoneNumber, String adress) {
 		
 		Client cl = new Client(type,idNumber, Name, Lastname, phoneNumber, adress);
 		if(clients.isEmpty()) {
@@ -102,9 +101,9 @@ public class Restaurant implements Serializable  {
 		
 	}
 	
-	public void addDelivery(int deliveryCode, Date dateandTime, int clientId, int restaurantNit, Product[] products, int[] quantities) {
+	public void addDelivery(int deliveryCode, int dateandTime,int hour, int clientId, int restaurantNit){
 		
-		Delivery dv1 = new Delivery(deliveryCode, dateandTime, clientId, restaurantNit, products, quantities);
+		Delivery dv1 = new Delivery(deliveryCode, dateandTime,hour, clientId, restaurantNit);
 		deliveries.add(dv1);
 	}
 	
@@ -136,35 +135,50 @@ public class Restaurant implements Serializable  {
 		String line = br.readLine();
 		while(line!=null) {
 			String[] parts = line.split(SEPARATOR);
-			String name = parts[0];
-			double amount = Double.parseDouble(parts[1]);
-		addClient(name, name, nit, nit, nit, name);
+			String type = parts[0];
+			String idNumber = parts[1];
+			String Name = parts[2];
+			String LastName = parts[3];
+			int phoneNumber = Integer.parseInt(parts[4]);
+			String adress = parts[5];
+			
+			
+			
+		addClient(type, idNumber, Name, LastName, phoneNumber , adress);
 		line = br.readLine();
 		}
 		br.close();
 	}
-	public void importarProducto(String p) throws IOException {
+	public void importarProduct(String p) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(p));
 		String line = br.readLine();
 		while(line!=null) {
 			String[] parts = line.split(SEPARATOR);
-			String name = parts[0];
-			double amount = Double.parseDouble(parts[1]);
-		    addProduct(nit, name, name, amount, name);
+			int code = Integer.parseInt(parts[0]);
+			String name = parts[1];
+			String description = parts[2];
+			double price = Double.parseDouble(parts[3]);
+			int restaurantNit = Integer.parseInt(parts[4]);
+			addProduct(code,name,description,price,restaurantNit);
+			
 			
 			line = br.readLine();
 		}
 		br.close();
 	}
     
-	public void importarPedido(String pd) throws IOException {
+	public void importDelivery(String pd) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(pd));
 		String line = br.readLine();
 		while(line!=null) {
 			String[] parts = line.split(SEPARATOR);
-			String name = parts[0];
-			double amount = Double.parseDouble(parts[1]);
-		    addPedido(nit, nit, nit, nit, nit);
+			int deliveryCode = Integer.parseInt(parts[0]);
+			int date = Integer.parseInt(parts[1]);
+			int hour = Integer.parseInt(parts[2]);
+			int clientId = Integer.parseInt(parts[3]);
+			int restaurantNit = Integer.parseInt(parts[4]);
+			
+			addDelivery(deliveryCode, date, hour, clientId, restaurantNit);
 			
 			line = br.readLine();
 		}

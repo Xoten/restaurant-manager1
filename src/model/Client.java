@@ -5,19 +5,23 @@ import java.io.Serializable;
 public class Client implements Serializable, Comparable<Client> {
 	
 	public final static long serialVersionUID = 1;
-	private int type;
+	private String type;
 	private String idNumber;
 	private String Name;
 	private int phoneNumber;
 	private String adress;
 	private String Lastname;
-	static int TI =1;
-	static int CC = 2;
-    static int PP = 3;
-    static int CE = 4;
+	private static final String TI= "TI";
+	private static final String CC = "CC";
+	private static final String PP = "PP";
+	private static final String CE = "CE";
+	
+	
+	
+    
 			
 	
-	public Client(int type, String idNumber, String Name,String Lastname, int phoneNumber, String adress) {
+	public Client(String type, String idNumber, String Name,String Lastname, int phoneNumber, String adress) {
 		this.type = type;
 		this.idNumber = idNumber;
 		this.Name = Name;
@@ -27,8 +31,24 @@ public class Client implements Serializable, Comparable<Client> {
 		
 	}
 	
-	public void setType(int type) {
-		this.type = type;
+	public void setType(String type) {
+		
+		
+		if(type.equalsIgnoreCase("TI")) {
+			
+			this.type = TI;
+		}else if(type.equalsIgnoreCase("CE")) {
+			
+			this.type = CE;
+		}else if(type.equalsIgnoreCase("PP")) {
+			
+			this.type = PP;
+		}else if(type.equalsIgnoreCase("CC")) {
+			
+			this.type = CC;
+		}
+		
+		
 	}
 
 	public void setIdNumber(String idNumber) {
@@ -56,23 +76,9 @@ public class Client implements Serializable, Comparable<Client> {
 		this.adress = adress;
 	}
 
-	public int getType() {
-		int tipo = 0;
-		if (type == TI) {
-			tipo= 1;
-		}
-		if (type == CC) {
-			tipo= 2;
-
-		}
-		if (type == PP) {
-			tipo = 3;
-
-		} else {
-			tipo= 4;
-		}
-
-		return tipo;
+	public String getType() {
+		
+		return type;
 		
 		
 		
