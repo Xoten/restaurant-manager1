@@ -1,11 +1,13 @@
 package model;
 
-public class Client implements Comparable<Client> {
+import java.io.Serializable;
+
+public class Client implements Serializable, Comparable<Client> {
 	
 	private int type;
 	private String idNumber;
 	private String Name;
-	private String phoneNumber;
+	private int phoneNumber;
 	private String adress;
 	private String Lastname;
 	static int TI =1;
@@ -14,13 +16,14 @@ public class Client implements Comparable<Client> {
     static int CE = 4;
 			
 	
-	public Client(int type, String idNumber, String Name,String Lastname, String phoneNumber, String adress) {
+	public Client(int type, String idNumber, String Name,String Lastname, int phoneNumber, String adress) {
 		this.type = type;
 		this.idNumber = idNumber;
 		this.Name = Name;
+		this.Lastname = Lastname;
 		this.phoneNumber = phoneNumber;
 		this.adress = adress;
-		this.Lastname = Lastname;
+		
 	}
 	
 	public void setType(int type) {
@@ -44,7 +47,7 @@ public class Client implements Comparable<Client> {
 		this.Lastname = Lastname;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -86,7 +89,7 @@ public class Client implements Comparable<Client> {
 		return Name;
 	}
 	
-	public String getPhoneNumber() {
+	public int getPhoneNumber() {
 		return phoneNumber;
 	}
 	
@@ -96,13 +99,16 @@ public class Client implements Comparable<Client> {
 
 	@Override
 	public int compareTo(Client cl1) {
-		int comp;
-		comp = Name.compareTo(cl1.getName());
 		
-			
-			
-			
-		return comp;
+		int comp;
+		if(phoneNumber<cl1.getPhoneNumber()) {
+			comp=-1;
+		}else if(phoneNumber>cl1.getPhoneNumber()) {
+			comp=1;
+		}else {
+			comp=0;
+		}return comp;
+		
 		
 		
 	}

@@ -1,7 +1,8 @@
 package model;
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Delivery {
+public class Delivery implements Serializable {
 	
 	private final static int  REQUESTED = 0 ; 
 	private final static int  IN_PROCESS = 1 ; 
@@ -11,11 +12,11 @@ public class Delivery {
 	private int deliveryCode;
 	private Date dateAndTime;
 	private int clientId;
-	private String restaurantNit;
-	private Product[] products;
+	private int restaurantNit;
+	private int[] products;
 	private int[] quantities;
 	
-	public Delivery(int deliveryCode, Date dateAndTime, int clientId, String restaurantNit, Product[] products, int[] quantities) {
+	public Delivery(int deliveryCode, Date dateAndTime, int clientId, int restaurantNit, int[] products, int[] quantities) {
 		this.clientId = clientId;
 		this.restaurantNit = restaurantNit;
 		this.products = products;
@@ -48,7 +49,7 @@ public class Delivery {
 		}
 	}
 
-	public void setProducts(Product[] products) {
+	public void setProducts(int[] products) {
 		this.products = products;
 	}
 
@@ -68,11 +69,11 @@ public class Delivery {
 		return clientId;
 	}
 
-	public String getRestaurantNit() {
+	public int getRestaurantNit() {
 		return restaurantNit;
 	}
 
-	public Product[] getProducts() {
+	public int[] getProducts() {
 		return products;
 	}
 

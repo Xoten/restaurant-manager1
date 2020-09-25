@@ -147,13 +147,32 @@ public class Menu {
 		
 		private void registerDelivery() {
 			
-			System.out.println("Adding Client ...");
-			System.out.print("Please enter your type of document: ");
-			int type = Integer.parseInt(sc.nextLine());
-			System.out.print("Please enter your id number ");
-			String idNumber = sc.nextLine();
-			System.out.print("Please enter your name ");
-			String Name = sc.nextLine();
+			System.out.println("Adding Delivery ...");
+			System.out.print("Please enter the deliveryCode: ");
+			int deliveryCode = Integer.parseInt(sc.nextLine());
+			System.out.print("Please enter the restaurant nit ");
+			int restaurantnit = Integer.parseInt(sc.nextLine());
+			System.out.print("Please enter the cliend id ");
+			int clientId = Integer.parseInt(sc.nextLine());
+			System.out.print("Please enter the amount of products ");
+			
+			int amount = Integer.parseInt(sc.nextLine());
+			
+			int[] products = new int[amount];
+			int[] quantities = new int[amount];
+			
+			for(int i = 0; i< amount ; i++) {
+				
+				System.out.println("Enter the product code No. " + i);
+				products[i] = Integer.parseInt(sc.nextLine());
+				System.out.print("Enter the quantities of that prodcut");
+				quantities[i] = Integer.parseInt(sc.nextLine());
+				
+			}
+			
+			
+			
+			
 			System.out.print("Please enter your Lastname ");
 			String Lastname = sc.nextLine();
 			System.out.print("Please enter your phoneNumber ");
@@ -188,7 +207,7 @@ public class Menu {
 		
 		
 		
-	}
+	
 	
 
 	

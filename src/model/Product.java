@@ -1,14 +1,16 @@
 package model;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
 	
 	private int code;
 	private String name;
 	private String description;
 	private double price;
-	private String restaurantNit;
+	private int restaurantNit;
 	
-	public Product(int code, String name, String description, double price, String restaurantNit) {
+	public Product(int code, String name, String description, double price, int restaurantNit) {
 		this.code = code;
 		this.name = name;
 		this.description = description;
@@ -44,7 +46,7 @@ public class Product {
 		return price;
 	}
 
-	public String getRestaurantNit() {
+	public int getRestaurantNit() {
 		return restaurantNit;
 	}
 	
