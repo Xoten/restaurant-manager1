@@ -2,7 +2,6 @@ package ui;
 import model.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 import exceptions.DifferentRestaurantException;
 import exceptions.InvalidCliendException;
@@ -13,17 +12,16 @@ import java.io.IOException;
 
 public class Menu {
 
-	private final static int EXIT_OPTION = 3;
+	private final static int EXIT_OPTION = 30;
 	private Scanner sc;
 	private Restaurant r1;
 	private Manager m1;
-	private Date d1;
-	private Delivery dv1;
+	
 	public Menu() {
 		sc = new Scanner(System.in);
 		r1 = new Restaurant();
 		m1 = new Manager();
-		d1 = new Date();
+		
 		
 	}
 	
@@ -39,30 +37,23 @@ public class Menu {
 	
 	private String getMenuText() {
 		String menu="=====================================================\n";
-		menu +=     "               RESTAURANTES\n";
+		menu +=     "               RESTAURANT MANAGER SYSTEM\n";
 		menu +=     "=====================================================\n";
-		menu +=     "1.REGISTRAR RESTAURANTES\n" ;
-		menu +=     "2.REGISTRAR  CLIENTES\n" ;
-		menu +=     "3.REGISTRAR PRODUCTOS\n" ;
-		menu +=     "4.REGISTRAR PEDIDOS\n" ;
-		menu +=     "5.ACTUALIZAR DATOS RESTAURANTES\n" ;
-		menu +=     "6.ACTUALIZAR DATOS CLIENTES\n" ;
-		menu +=     "7.ACTUALIZAR DATOS PRODUCTO\n" ;
-		menu +=     "8 ACTUALIZAR DATOS PEDIDOS\n" ;
-		menu +=     "9.CAMBIAR EL ESTADO DE UN PEDIDO\n" ;
-		menu +=     "10. IMPORTAR DATOS RESTAURANT\nE" ;
-		menu +=     "11. IMPORTAR DATOS CLIENTE\n" ;
-		menu +=     "12. IMPORTAR DATOS PRODUCTO\n";
-		menu +=     "13. IMPORTAR DATOS PEDIDO\n" ;
-		menu +=     "14. EXPORTAR DATOS RESTAURANT\n" ;
-		menu +=     "15. EXPORTAR DATOS CLIENTE\n" ;
-		menu +=     "16. EXPORTAR DATOS PRODUCTO\n";
-		menu +=     "17. EXPORTAR DATOS PEDIDO\n" ;
-		menu +=     "18.BUSCAR UN CLIENTE EFICIENTEMENTE\n" ;
-		menu +=     "19. LISTAR EN PANTALLA RESTAURANTES\n" ;
-		menu +=     "20.LISTAR EN PANTALLA CLIENTES\n" ;
-		menu +=     "21.GUARDAR INFORMACION\n" ;
-		menu +=     "POR FAVOR INGRESE LA OPCION\n" ;
+		menu +=     "1.Register restaurants\n" ;
+		menu +=     "2.Register clients\n" ;
+		menu +=     "3.Register products\n" ;
+		menu +=     "4.Register deliveries\n" ;
+		menu +=     "5.Update Restaurant data\n" ;
+		menu +=     "6 Update Client data\n" ;
+		menu +=     "7.Update Product data\n" ;
+		menu +=     "8 Update Deliveries data\n" ;
+		menu +=     "9.Modify state of a delivery\n" ;
+		menu +=     "10.Import data\nE" ;
+		menu +=     "11.Search Client\n" ;
+		menu +=     "12. Show Restaurants\n" ;
+		menu +=     "13.Show Clients\n" ;
+		menu +=     "14.Save Data\n" ;
+		menu +=     "30.EXIT\n" ;
 		
 		return menu;
 	}
@@ -122,19 +113,25 @@ public class Menu {
 			
 			case 8:
 				importData();
-			
-			case 22:
-				exitProgram();
 				
-			case 18:
+			case 9 :
+				ModifyStateofDelivery();
+				
+			case 11:
+				
 				SearchClientByName();
 				break;
+			
+			case 20:
+				exitProgram();
+				
+			
 				
 			case 19:
 				
 				if(m1.getRestaurants().isEmpty()) {
 					
-					System.out.println("La lista de restaurantes esta vacia");
+					System.out.println("The list of resstaurants is empty");
 					
 						 
 						 
@@ -148,10 +145,10 @@ public class Menu {
 						}
 				break;
 				
-			case 20:
+			case 13:
 				
 				if(r1.getClients().isEmpty()) {
-					System.out.println("La lista de clientes esta vacia");
+					System.out.println("The list of clients is empty");
 					
 				} else {
 					
@@ -222,7 +219,10 @@ public class Menu {
 		private void registerProduct() {
 			
 			System.out.println("Adding Product ...");
-			int code = (int)(1000000*Math.random());
+			
+			System.out.println("Please enter the product code");
+			int code = sc.nextInt();
+			sc.nextLine();
 			System.out.println("Please enter the product name ");
 			String namep = sc.nextLine();
 			System.out.println("Please enter the product description");
@@ -235,7 +235,7 @@ public class Menu {
 			r1.addProduct(code,namep,description,price,restaurantNit);
 			
 			
-			System.out.println("The prodcut has been registered succesfully");
+			System.out.println("The product has been registered succesfully");
 			
 			
 			
@@ -321,7 +321,7 @@ public class Menu {
 				
 				
 				System.out.println("you can only order from one restaurant.");
-				System.out.println("if a product is unavailable, its because its from a diferent restaurant, please press 0 to exit");
+				System.out.println("if a product is unavailable, its because its from a different restaurant");
 				int productIndex = 0;
 				for (Product product : r1.getProduct()) {
 					productIndex++;
@@ -334,7 +334,7 @@ public class Menu {
 				try {
 					option = Integer.parseInt(sc.nextLine());
 					if (option < 1 || option > productIndex) {
-						System.out.print("Opcion invalida");
+						System.out.print("Invalid Option");
 					}
 					
 					if (resNit == 0 ) {
@@ -629,23 +629,9 @@ public class Menu {
 	        System.out.println("FINDING CLIENT**");
 	        System.out.println("Enter the first name of client ");
 	        String name = sc.nextLine();
-	        System.out.println("Enter the last name of client ");
-	        String lastName = sc.nextLine();
-	        boolean found;
-	        long start = System.currentTimeMillis();
-	        found = r1.searchClientName(name, lastName);
-	        long end = System.currentTimeMillis();
-	        if(found) {
-	            System.out.println("Client :"+name+" "+lastName+" was found!");
-	        } else {
-	            System.out.println("Client :"+name+" "+lastName+" was not found!");
-	        }
-	        System.out.println("Start: "+start);
-	        System.out.println("End: "+end);
-	        System.out.println("Searching time was: "+(end-start));
+	        System.out.println( r1.binarySearchClient(name));
+	    
 	    }
-	    
-	    
 	    private void importData() {
 			boolean error = false;
 			int option = 0;
@@ -709,6 +695,45 @@ public class Menu {
 			}
 			
 			 
+		}
+	    
+	    private void ModifyStateofDelivery(){
+			boolean error = false;
+			int deliveryIndex = 0;
+			
+			do {
+				int cont = 0;
+				
+				System.out.println("Select a delivery to change status:");
+				for (Delivery delivery: r1.getDeliveries()) {
+					System.out.println(cont + ". "  + String.valueOf( delivery.getDeliveryCode() )+ "." + delivery.getOrderState());
+				}
+				
+				try {
+					deliveryIndex = Integer.parseInt( sc.nextLine());
+					if (deliveryIndex < 1 || deliveryIndex >  cont ) {
+						System.out.println("Invalid Option");
+					}
+
+					error = true;
+					System.out.println("Please press any key to continue");
+				}catch (NumberFormatException numberFormatException) {
+					System.err.println("the entered option was invalid. please only enter the number next to the option");
+					error = true;
+					System.out.println("Please press any key to continue");
+				}
+				
+				
+				
+			} while (error);
+			
+			int orderStateNum = r1.getDeliveries().get(deliveryIndex).getOrderState().ordinal() + 1;
+			if (orderStateNum <= 3) {
+				r1.getDeliveries().get(deliveryIndex).setOrderState(orderStateNum);
+			}
+			
+			System.out.println("the new status is: " + String.valueOf( r1.getDeliveries().get(deliveryIndex).getOrderState() ));
+			
 		}
 		
 		

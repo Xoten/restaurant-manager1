@@ -27,6 +27,7 @@ public class Delivery implements Serializable {
 		this.clientId = clientId;
 		this.quantities = quantities;
 		this.products = products;
+		orderState = OrderState.valueOf("REQUESTED");
 		
 		products = new ArrayList<Product>();
 	}
@@ -35,8 +36,8 @@ public class Delivery implements Serializable {
 	
 	
 
-	public String getOrderState() {
-		return orderState.toString();
+	public OrderState getOrderState() {
+		return orderState;
 	}
 	public void setOrderState(int orderStateNum) {
 		switch (orderStateNum) {

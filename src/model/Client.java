@@ -31,6 +31,12 @@ public class Client implements Serializable, Comparable<Client> {
 		
 	}
 	
+	public Client() {
+		
+	}
+	
+	
+	
 	public void setType(String type) {
 		
 		

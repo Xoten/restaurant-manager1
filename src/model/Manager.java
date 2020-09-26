@@ -43,7 +43,7 @@ public class Manager {
 	
 	public void showRestaurant() {
 		for(int i=0;i<restaurant.size();i++) {
-			System.out.println(restaurant.get(i).getNit()+"  "+restaurant.get(i).getName()+" "+restaurant.get(i).getAdminName());
+			System.out.println("Restaurant No." +(i+1) + "\n\n" + "NIT: "+ restaurant.get(i).getNit() +"\n"+ "Name"+restaurant.get(i).getName()+"\n "+ " Admin Name " +restaurant.get(i).getAdminName()+ "\n\n");
 		}
 	}
 	
@@ -76,6 +76,10 @@ public class Manager {
 		return registeredId;		
 	}
 	
+	/**
+	 * 
+	 * @param resNit
+	 */
 	@SuppressWarnings("unchecked")
 	public Restaurant getRestaurant (int resNit) {
 		Restaurant r1 = new Restaurant();
@@ -189,7 +193,7 @@ public class Manager {
 		int cent = 1;
 		while (line != null ) {
 			if (cent != 1) {
-				String[] parts = line.split(",");
+				String[] parts = line.split(SEPARATOR);
 				String name = parts[0];
 				String adminName = parts[2];
 				int nit = Integer.parseInt(parts[1]);

@@ -78,26 +78,11 @@ public class Restaurant implements Serializable  {
 		}else {
 			
 			int i = 0;
-			while(i<clients.size() && cl.getLastName().compareTo(clients.get(i).getLastName())<0) {
+			while(i<clients.size() && cl.getLastName().compareTo(clients.get(i).getLastName())>0) {
 				i++;
-				if(cl.getLastName().compareTo(clients.get(i).getLastName()) == 0) {
-					int j = 0;
-					while(cl.getName().compareTo(clients.get(j).getName())<0) 
-					
-				{
-					j++;	
-						
-						
-				}  
-					clients.add(j,cl);
-				}
 				
-				else {
-					
-					clients.add(i,cl);
-				}
 			}
-			
+			clients.add(i,cl);
 			
 		}
 		
@@ -215,24 +200,35 @@ public class Restaurant implements Serializable  {
 				
 				return info;
 			}
-	public boolean searchClientName(String name, String lastName) {
-        String fullName = "";
-        fullName = name+" "+lastName;
-        boolean found = false;
-        int start = 0;
-        int end = clients.size()-1;
-        while (start <= end && !found) {
-            int middle = (start + end)/2;
-            if (clients.get(middle).getName().equalsIgnoreCase(fullName)) {
-                found = true;
-            } else if(clients.get(middle).getLastName().compareToIgnoreCase(fullName) < 1){
-                end = middle -1;
-            } else {
-                start = middle +1;
-            }
-        }
-        return found;
-    }
+	public String binarySearchClient(String name) {
+		String msg = "";
+		long start = System.currentTimeMillis();
+		boolean find = false;
+		int in = 0;
+		int fin = clients.size();
+		while (in <= fin && !find) {
+			int pos = (int) Math.floor((in+fin)/2);
+			if (pos != clients.size()) {
+				String el = clients.get(pos).getName();
+				int compar = name.compareToIgnoreCase(el);
+				if (compar == 0) {
+					msg += clients.get(pos);
+					msg += "-------------------\n";
+					find = true;
+				} else if (compar < 0) {
+					fin = pos - 1;
+				} else if (compar > 0) {
+					in = pos + 1;
+				}
+			}
+		}
+		long end = System.currentTimeMillis();
+		if (find == false) {
+			msg += "A client with this name don't exists\n";
+		}
+		msg += "Ejecution time: " + (end - start) + "ms";
+		return msg;
+	}
 	
 	
 	
@@ -272,7 +268,7 @@ public class Restaurant implements Serializable  {
 			Client api = clients.get(i);
 			int j = i;
 			Client apj = clients.get(j-1);
-			while(j>0 && api.compareTo(apj)<0) {
+			while(j>0 && api.compareTo(apj)>0) {
 				clients.set(j,apj);
 				j--;
 				if(j>0) apj = clients.get(j-1);
