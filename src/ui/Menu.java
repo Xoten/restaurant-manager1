@@ -1,8 +1,15 @@
 package ui;
 import model.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import exceptions.DifferentRestaurantException;
+import exceptions.InvalidCliendException;
+import exceptions.InvalidNitException;
+
+import java.io.IOException;
+
 
 public class Menu {
 
@@ -20,7 +27,7 @@ public class Menu {
 		
 	}
 	
-	public void startMenu() {
+	public void startMenu() throws InvalidCliendException, InvalidNitException {
 		String menu = getMenuText();
 		int option;
 		do {
@@ -66,7 +73,7 @@ public class Menu {
 		return op;
 	}
 	
-	private void executeOperation(int option) {
+	private void executeOperation(int option) throws InvalidCliendException, InvalidNitException {
 		switch(option) {
 			case 1: 
 				
@@ -86,9 +93,45 @@ public class Menu {
 				
 				registerDelivery();
 				break;
+				
+			case 5:
+				
+				
 			 
 			case 22:
 				exitProgram();
+				
+			case 19:
+				
+				if(m1.getRestaurants().isEmpty()) {
+					
+					System.out.println("La lista de restaurantes esta vacia");
+					
+						 
+						 
+					 }else {
+						 
+						 m1.sortRestaurantByName();
+						 
+						 m1.showRestaurant();
+						
+							
+						}
+				
+			case 20:
+				
+				if(r1.getClients().isEmpty()) {
+					System.out.println("La lista de clientes esta vacia");
+					
+				} else {
+					
+					r1.sortClientsdByphoneNumber();
+					System.out.println(r1.getClients());
+				}
+					 
+					
+				
+				
 			default: break;
 		}
 	}
@@ -97,20 +140,20 @@ public class Menu {
 		sc.close();
 	}
 	
-	private void registerClient() {
+	private void registerClient() throws NumberFormatException {
 		
 		System.out.println("Adding Client ...");
-		System.out.print("Please enter your type of document: ");
+		System.out.println("Please enter your type of document: ");
 		String type = sc.nextLine();
-		System.out.print("Please enter your id number ");
+		System.out.println("Please enter your id number ");
 		String idNumber = sc.nextLine();
-		System.out.print("Please enter your name ");
+		System.out.println("Please enter your name ");
 		String Name = sc.nextLine();
-		System.out.print("Please enter your Lastname ");
+		System.out.println("Please enter your Lastname ");
 		String Lastname = sc.nextLine();
-		System.out.print("Please enter your phoneNumber ");
+		System.out.println("Please enter your phoneNumber ");
 		int phoneNumber = Integer.parseInt(sc.nextLine());
-		System.out.print("Please enter your adress");
+		System.out.println("Please enter your adress");
 		String adress = sc.nextLine();
 		
 		
@@ -124,11 +167,11 @@ public class Menu {
 	    private void registerRestaurant() {
 		
 		System.out.println("Adding Restaurant ...");
-		System.out.print("Please enter your restaurant name: ");
+		System.out.println("Please enter your restaurant name: ");
 	     String name = sc.nextLine();
-		System.out.print("Please enter the nit of the restaurant ");
+		System.out.println("Please enter the nit of the restaurant ");
 		int nit = Integer.parseInt(sc.nextLine());
-		System.out.print("Please enter the admin name ");
+		System.out.println("Please enter the admin name ");
 		String adminName = sc.nextLine();
 		
 		
@@ -143,13 +186,13 @@ public class Menu {
 			
 			System.out.println("Adding Product ...");
 			int code = (int)(1000000*Math.random());
-			System.out.print("Please enter the product name ");
+			System.out.println("Please enter the product name ");
 			String namep = sc.nextLine();
-			System.out.print("Please enter the product description");
+			System.out.println("Please enter the product description");
 			String description = sc.nextLine();
-			System.out.print("Please enter the product price ");
+			System.out.println("Please enter the product price: ");
 			double price = Double.parseDouble(sc.nextLine());
-			System.out.print("Please enter the restaurant nit ");
+			System.out.println("Please enter the restaurant nit: ");
 			int restaurantNit = Integer.parseInt(sc.nextLine());
 			
 			r1.addProduct(code,namep,description,price,restaurantNit);
@@ -162,55 +205,131 @@ public class Menu {
 			
 		}
 		
-		private void registerDelivery() {
+		private void registerDelivery() throws  InvalidCliendException, InvalidNitException {
 			
-			System.out.println("Adding Delivery ...");
 			
-			int deliveryCode = (int)(100000*Math.random());
-			System.out.print("Please enter the restaurant nit ");
-			int restaurantnit = Integer.parseInt(sc.nextLine());
-			System.out.print("Please enter the cliend id ");
-			int clientId = Integer.parseInt(sc.nextLine());
 			
-			 int date = d1.getDate();
-			 int hour = d1.getHours();
-			 
-			 
 			
-			r1.addDelivery(deliveryCode, date, hour, clientId, restaurantnit);
-			System.out.print("Please enter the amount of products ");
-			 int amount = Integer.parseInt(sc.nextLine());
 			
-			for(int i = 0; i<amount; i++) {
-				System.out.print("Please enter the code of the product ");
-				
-				int code = Integer.parseInt(sc.nextLine());
-				
-				System.out.print("Please enter the amount of the product ");
-				
-				int quantities = Integer.parseInt(sc.nextLine());
-				 dv1.addProductToOrder(code, quantities);
+			System.out.println("Add a new delivery order (the entered info can be changed later on):");
+			System.out.println("-Enter the client idNumber:");
+			
+			System.out.println("\nRegistred id list:");
+			for (Client client : r1.getClients()) {
+				System.out.println(client.getName() + ": " + client.getIdNumber());
 			}
-			   
-			   
+		
 			
+			System.out.println("-Enter the id number:");
+			String clientId = sc.nextLine();
+			if (!m1.registeredId(clientId)) {
+				throw new InvalidCliendException(clientId);
+			}
+					
+			ArrayList<Product> products = new ArrayList<>();
+			ArrayList<Integer> quantities =  new ArrayList<>();
+			
+			boolean selectAnOther = false;
+			int resNit = 0;
+			do {
+				if (products.size() != 0 ) {
+					resNit = products.get(0).getRestaurantNit();
+				}
+				Product product = selectProduct(resNit);
+				System.out.println("- Enter the quantitie of this product to add to the delivery:");
+				int quantity = Integer.parseInt(sc.nextLine());
+				if (quantity < 0) {
+					throw new NumberFormatException();
+				}
+				
+				products.add(product);
+				quantities.add(quantity);
+				
+				System.out.println("- Add nore products:");
+				System.out.println("1. Yes");
+				System.out.println("2. No");
+				int option = Integer.parseInt(sc.nextLine());
+				switch (option) {
+				case 1:
+					selectAnOther = true;
+					break;
+				case 2:
+					selectAnOther = false;
+					break;
+				default:
+					throw new NumberFormatException();
+				}
+				
+				
+				
+			} while (selectAnOther);
+			
+			
+			int deliveryCode = (int)(Math.random()*1000);
+			Delivery delivery = new Delivery(deliveryCode, clientId, products.get(0).getRestaurantNit() , products, quantities);
+			r1.getDeliveries().add(delivery);
 	
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+				
 			
 		}
+		
+		
+		
+		
+		private Product selectProduct(int resNit) {
+			boolean error = false;
+			int option = 0;
+			Product finalProduct = new Product(); 
+			do {
+				
+				
+				System.out.println("you can only order from one restaurant.");
+				System.out.println("if a product is unavailable, its because its from a diferent restaurant, please press 0 to exit");
+				int productIndex = 0;
+				for (Product product : r1.getProduct()) {
+					productIndex++;
+					if (resNit != 0 && product.getRestaurantNit() == resNit) {
+						System.out.print("unavailable- ");
+					}
+					System.out.println(productIndex + ". " + product.getName() + ": " + product.getPrice() + ". Restaurant: " + m1.getRestaurant(product.getRestaurantNit()).getName() );
+				}
+				
+				try {
+					option = Integer.parseInt(sc.nextLine());
+					if (option < 1 || option > productIndex) {
+						System.out.print("Opcion invalida");
+					}
+					
+					if (resNit == 0 ) {
+						finalProduct = r1.getProduct().get(option-1);
+					}else {
+						if (r1.getProduct().get(option-1).getRestaurantNit()==(resNit)) {
+							finalProduct = r1.getProduct().get(option-1);
+						}else {
+							throw new DifferentRestaurantException();
+						}
+					}
+					error = false;
+				} catch (NumberFormatException numberFormatException) {
+					System.err.println("the entered option was invalid. please only enter the number next to the option");
+					System.out.println("Press any key to continue.");
+					sc.nextLine();
+					error = true;
+				}catch (DifferentRestaurantException diferentRestaurantException) {
+					System.err.println(diferentRestaurantException.getMessage());
+					System.out.println("Press any key to continue.");
+					sc.nextLine();
+					error = true;
+				}
+				
+			} while (error);
+			
+			
+			
+			return finalProduct;
+							
+		}
+	
 		
 		
 		

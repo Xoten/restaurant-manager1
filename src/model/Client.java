@@ -120,9 +120,13 @@ public class Client implements Serializable, Comparable<Client> {
 		
 	}
 	
+	public String toString() {
+		
+		return "type:"+type+","+ "IdNumber:" + idNumber+","+ "Name:"+Name+","+"LastName:"+Lastname+","+"PhoneNumber:"+phoneNumber+","+"Adress:"+adress;
+		
+	}
 	
-	
-	
+		
 	
 
 }

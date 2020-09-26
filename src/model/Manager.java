@@ -28,7 +28,7 @@ public class Manager {
 		restaurant = new ArrayList<>();
 	}
 
-	public List<Restaurant> getRestaurante() {
+	public List<Restaurant> getRestaurants() {
 		return restaurant;
 
 	}
@@ -39,6 +39,74 @@ public class Manager {
 		Collections.sort(restaurant,nc);
 		
 	}
+	
+	public void showRestaurant() {
+		for(int i=0;i<restaurant.size();i++) {
+			System.out.println(restaurant.get(i).getNit()+"  "+restaurant.get(i).getName()+" "+restaurant.get(i).getAdminName());
+		}
+	}
+	
+	
+	
+	
+	public boolean usedNit(int nit) {
+		boolean usedNit = false;
+
+		for (int i = 0; i < restaurant.size() && !usedNit ; i++){
+			
+			if(restaurant.get(i).getNit() == nit) {
+				
+				usedNit = true;
+			}
+			
+		}
+		return usedNit;
+	}
+	
+	public boolean registeredId(String id) {
+		boolean registeredId = false;
+		
+		for (int i = 0; i < r1.getClients().size() && !registeredId; i++){
+			if ( r1.getClients().get(i).getIdNumber().equals(id) ) {
+				registeredId = true;
+			}
+		}
+		
+		return registeredId;		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Restaurant getRestaurant (int resNit) {
+		Restaurant r1 = new Restaurant();
+		for (int i = 0; i < restaurant.size(); i++) {
+			if (restaurant.get(i).getNit() == resNit) {
+				restaurant = (List<Restaurant>) restaurant.get(i);
+			}
+		}
+		
+		return r1;
+		
+		
+		
+	}
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
 
 
 	public void addRestaurant(String name, int nit ,String adminName) {

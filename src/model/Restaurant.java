@@ -25,6 +25,8 @@ public class Restaurant implements Serializable  {
 		this.adminName = adminName;
 	}
 	
+	
+	
 	public Restaurant() {
 		
 		clients = new ArrayList<Client>();
@@ -33,6 +35,8 @@ public class Restaurant implements Serializable  {
 		
 		
 	}
+	
+	
 
 	public void setName(String name) {
 		this.name = name;
@@ -101,9 +105,9 @@ public class Restaurant implements Serializable  {
 		
 	}
 	
-	public void addDelivery(int deliveryCode, int dateandTime,int hour, int clientId, int restaurantNit){
+	public void addDelivery(int deliveryCode, String clientId ,int restaurantNit, ArrayList<Product> products, ArrayList<Integer> quantities){
 		
-		Delivery dv1 = new Delivery(deliveryCode, dateandTime,hour, clientId, restaurantNit);
+		Delivery dv1 = new Delivery(deliveryCode,clientId,restaurantNit, products, quantities);
 		deliveries.add(dv1);
 	}
 	
@@ -184,6 +188,93 @@ public class Restaurant implements Serializable  {
 		}
 		br.close();
 	}
+	
+	
+	public void UpdateProductsByCode(int code, String name, String description, double price,
+			int restaurantNit) {
+
+		boolean found = false;
+		int start = 0;
+		int end = products.size() - 1;
+		Product prod = products.get(0);
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+			prod = products.get(middle);
+			if (prod.getCode() == (code)) {
+				found = true;
+			} else if (prod.getCode() > code){
+				end = middle - 1;
+
+			} else {
+				start = middle + 1;
+			}
+
+		}
+
+		prod.setName(name);
+		prod.setCode(code);
+		prod.setDescription(description);
+		prod.setPrice(price);
+		prod.setRestaurantNit(restaurantNit);
+
+	}
+	
+	
+	public void  UpdateClientbyId(String type, String idNumber, String Name, String LastName,
+			int phoneNumber, String adress) {
+
+		boolean found = false;
+		int start = 0;
+		int end = clients.size() - 1;
+		Client cl = clients.get(0);
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+			cl = clients.get(middle);
+			if (cl.getIdNumber().compareTo(idNumber)== 0) {
+				found = true;
+			} else if (cl.getIdNumber().compareTo(idNumber)>0) {
+				end = middle - 1;
+
+			} else {
+				start = middle + 1;
+			}
+
+		}
+
+		cl.setName(Name);
+		cl.setLastName(LastName);
+		cl.setIdNumber(idNumber);
+		cl.setType(type);
+		cl.setPhoneNumber(phoneNumber);
+		cl.setAdress(adress);
+
+	}
+	
+	
+	
+	
+	public String searchProductByRestaurantNit(int nit) {
+		
+		String info = "";
+			
+			for(int i = 0; i<products.size();i++) {
+				
+				
+				if(products.get(i).getRestaurantNit() == nit) {
+					
+					info += products.get(i).getInfo();
+				}
+				
+				
+				}
+				
+				return info;
+			}
+	
+	
+	
+	
+
 
 	public void sortClientByLastNameAndName() {
 		
@@ -211,6 +302,55 @@ public class Restaurant implements Serializable  {
 		
 		
 	}
+	
+	public void sortClientsdByphoneNumber() {
+		
+		for (int i = 1; i < clients.size(); i++) {
+			Client api = clients.get(i);
+			int j = i;
+			Client apj = clients.get(j-1);
+			while(j>0 && api.compareTo(apj)<0) {
+				clients.set(j,apj);
+				j--;
+				if(j>0) apj = clients.get(j-1);
+			}
+			clients.set(j,api);
+		}
+		
+		
+		
+		
+		
+	}
+	
+	@Override
+	public String toString() {
+		return "Restaurante [nit=" + getNit() + ", nombre=" + getName() + ", nombreAdministrador=" + getAdminName() + "]";
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 		

@@ -1,78 +1,61 @@
 package model;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Delivery implements Serializable {
 	public final static long serialVersionUID = 1;
 	
 	private int deliveryCode;
-	private int date;
-	private int clientId;
+	private Date date;
+	private String clientId;
 	private int restaurantNit;
 	private ArrayList<Product> products;
-	private int hour;
-	
-	public enum status{REQUESTED,IN_PROCESS,SENT,DELIVERED}
-	public status OrderState;
+	private ArrayList<Integer> quantities;
+	private OrderState orderState;
 	
 	
 	
-	public Delivery(int deliveryCode, int date, int hour, int clientId,  int restaurantNit) {
+	
+	
+	
+	
+	public Delivery(int deliveryCode, String clientId,  int restaurantNit, ArrayList<Product> products, ArrayList<Integer> quantities) {
 		this.restaurantNit = restaurantNit;
 		this.deliveryCode = deliveryCode;
-		this.date= date;
+		date = new Date();
 		this.clientId = clientId;
-		this.hour = hour;
-		this.OrderState = status.REQUESTED;
+		this.quantities = quantities;
+		this.products = products;
 		
 		products = new ArrayList<Product>();
 	}
 	
-	public void addProductToOrder(int code, int quantities) {
-		
-		Product p1 = new Product(code, quantities);
-		
-		products.add(p1);
-		
-	}
+	
 	
 	
 
 	public String getOrderState() {
-		return OrderState.name();
+		return orderState.toString();
 	}
+	public void setOrderState(int orderStateNum) {
+		switch (orderStateNum) {
+		case 0:
+			orderState = OrderState.valueOf( "REQUESTED" );
+			break;
+			
+		case 1:
+			orderState = OrderState.valueOf( "IN_PROCESS" );
+			break;
 
-	@SuppressWarnings("static-access")
-	public String setOrderStatebyValue(String status) {
-		String info = "";
-		
-		if(getOrderState().equalsIgnoreCase("REQUESTED")) {
+		case 2:
+			orderState = OrderState.valueOf( "SENT" );
+			break;
 			
-			setOrderState(OrderState.IN_PROCESS);
-			
-			info+= "Order status setted IN_PROCESS";
-			
-		}else if(getOrderState().equalsIgnoreCase("IN_PROCESS")) {
-			
-			setOrderState(OrderState.SENT);
-			
-			info+= "Order status setted in SENT";
-		
-	    }else  if(getOrderState().equalsIgnoreCase("SENT")) {
-			
-			setOrderState(OrderState.DELIVERED);
-			
-			info+= "Order status setted in SENT";
-
-	    }
-		
-		return info;
-	}
-	
-
-	private void setOrderState(status orderState) {
-		
-		this.OrderState = status.REQUESTED;
+		case 3:
+			orderState = OrderState.valueOf( "DELIVERED" );
+			break;
+		}
 		
 	}
 
@@ -82,11 +65,11 @@ public class Delivery implements Serializable {
 		return deliveryCode;
 	}
 
-	public int getDate() {
-		return date;
+	public String getDate() {
+		return date.toString();
 	}
 
-	public int getClientId() {
+	public String getClientId() {
 		return clientId;
 	}
 
@@ -99,11 +82,16 @@ public class Delivery implements Serializable {
 		return products;
 	}
 	
-	public int getHour() {
+ @Override
+	public String toString() {
 		
-		return hour;
+	 return "Delivery [orderState=" + orderState + ", deliveryCode=" + deliveryCode + ", dateAndTime=" + date
+				+ ", clientId=" + clientId + ", restaurantNit=" + restaurantNit + ", products=" + products
+				+ ", quantities=" + quantities + "]";
+		
+		
+		
 	}
-	
 
 
 

@@ -11,10 +11,8 @@ public class Product implements Serializable {
 	private int restaurantNit;
 	private int quantities;
 	
-	public Product(int code, int quantities) {
+	public Product() {
 		
-		this.quantities = quantities;
-		this.code = quantities;
 		
 		
 	}
@@ -64,6 +62,29 @@ public class Product implements Serializable {
 		return quantities;
 	}
 	
+	public void setRestaurantNit(int restaurantNit) {
+		
+		this.restaurantNit = restaurantNit;
+	}
+	
+	public void setCode(int code) {
+		
+		this.code = code;
+	}
+	
+	@Override
+	public String toString() {
+		
+		String info = "name" + getName() + "description" + getDescription() + "price" + getPrice() + "restaurantNit"
+		 + getRestaurantNit();
+		return info;
+	}
+     public String getInfo() {
+		
+		String info = "name" + getName() + "description" + getDescription() + "price" + getPrice() + "restaurantNit"
+		 + getRestaurantNit();
+		return info;
+	}
 	
 	
 	
