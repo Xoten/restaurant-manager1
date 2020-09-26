@@ -111,7 +111,7 @@ public class Menu {
 			
 			break;
 			
-			case 8:
+			case 10:
 				importData();
 				
 			case 9 :
@@ -198,13 +198,17 @@ public class Menu {
 		
 	}
 	
-	    private void registerRestaurant() {
+	    private void registerRestaurant() throws InvalidNitException {
 		
 		System.out.println("Adding Restaurant ...");
 		System.out.println("Please enter your restaurant name: ");
 	     String name = sc.nextLine();
 		System.out.println("Please enter the nit of the restaurant ");
 		int nit = Integer.parseInt(sc.nextLine());
+		
+		if (m1.usedNit(nit)) {
+			throw new InvalidNitException(nit);
+		}
 		System.out.println("Please enter the admin name ");
 		String adminName = sc.nextLine();
 		
