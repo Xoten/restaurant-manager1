@@ -97,7 +97,25 @@ public class Menu {
 			case 5:
 				
 				
+				
+				
+				
+				
+				
+			 break;
 			 
+			case 6 :
+				
+			  editClient();
+			
+			
+			
+			
+			
+			
+			
+			break;
+			
 			case 22:
 				exitProgram();
 				
@@ -328,6 +346,177 @@ public class Menu {
 			
 			return finalProduct;
 							
+		}
+		
+		public void editClient() {
+			
+			System.out.println("Please enter the client id");
+			String number = sc.nextLine();
+			int index = r1.UpdateClientbyId(number);
+			
+			System.out.println("¿What do you want to update?");
+			System.out.println("1.Name");
+			System.out.println("2.Lastname");
+			System.out.println("3.phoneNumber");
+			System.out.println("4.Adress");
+			System.out.println("5.Type");
+			
+			
+			
+			int option = sc.nextInt();
+			sc.nextLine();
+			
+			switch(option){
+			
+			
+			case 1:
+				
+				System.out.println("Please enter the new Name");
+				
+				String newname = sc.nextLine();
+				
+				r1.getClients().get(index).setName(newname);
+				
+				System.out.println("Name updated!!!");
+				
+			case 2:
+              System.out.println("Please enter the new Lastname");
+				
+				String newlastname = sc.nextLine();
+				
+				r1.getClients().get(index).setLastName(newlastname);
+				
+				System.out.println("Lastname updated!!!");
+				
+				break;
+				
+			case 3:
+				
+				
+                 System.out.println("Please enter the new phoneNumber");
+				
+				int phoneNumber = sc.nextInt();
+				sc.nextLine();
+				
+				r1.getClients().get(index).setPhoneNumber(phoneNumber);
+				
+				System.out.println("phone Number updated!!!");
+				
+				
+				
+				break;
+				
+			case 4:
+				
+				 System.out.println("Please enter the new Adress");
+					
+					String newAdress = sc.nextLine();
+					
+					r1.getClients().get(index).setAdress(newAdress);
+					
+					System.out.println("Adress updated!!!");
+					
+				
+				
+			    break;
+			    
+			case 5: 
+			
+				 System.out.println("Please enter the new typeofDocument");
+					
+					String newType = sc.nextLine();
+					
+					r1.getClients().get(index).setType(newType);
+					
+					System.out.println("type of document updated!!!");
+					
+			break;
+			}
+			
+			
+			
+		}
+		
+		public void editProduct() {
+			
+			
+			System.out.println("Please enter the product code");
+			int number = sc.nextInt();
+			sc.nextLine();
+			int productindex = r1.UpdateProductsByCode(number);
+			
+			System.out.println("¿What do you want to update?");
+			System.out.println("1.Name");
+			System.out.println("2.description");
+			System.out.println("3.price");
+			System.out.println("4.restaurantNit");
+			
+			
+			
+			
+			int option = sc.nextInt();
+			sc.nextLine();
+			
+			switch(option){
+			
+			
+			case 1:
+				
+				System.out.println("Please enter the new product name");
+				
+				String pnewname = sc.nextLine();
+				
+				r1.getProduct().get(productindex).setName(pnewname);
+				
+				System.out.println("Product Name updated!!!");
+				
+			case 2:
+              System.out.println("Please enter the new description");
+				
+				String pdescription = sc.nextLine();
+				
+				r1.getProduct().get(productindex).setDescription(pdescription);
+				
+				System.out.println("description updated!!!");
+				
+				break;
+				
+			case 3:
+				
+				
+                 System.out.println("Please enter the new price");
+				
+				double pprice = sc.nextDouble();
+				sc.nextLine();
+				
+				r1.getProduct().get(productindex).setPrice(pprice);
+				
+				System.out.println("price updated!!!");
+				
+				
+				
+				break;
+				
+			case 4:
+				
+				 System.out.println("Please enter the new restaurantNit");
+					
+					int prestnit = sc.nextInt();
+					sc.nextLine();
+					
+					r1.getProduct().get(productindex).setRestaurantNit(prestnit);
+					
+					System.out.println("restaurant nit updated!!!");
+				
+			    break;
+			    
+	
+			
+			}
+			
+			
+	
+			
 		}
 	
 		

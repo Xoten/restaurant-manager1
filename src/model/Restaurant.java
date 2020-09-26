@@ -190,9 +190,10 @@ public class Restaurant implements Serializable  {
 	}
 	
 	
-	public void UpdateProductsByCode(int code, String name, String description, double price,
-			int restaurantNit) {
-
+	public int UpdateProductsByCode(int code)
+			 {
+        
+		int index = 0;
 		boolean found = false;
 		int start = 0;
 		int end = products.size() - 1;
@@ -201,6 +202,7 @@ public class Restaurant implements Serializable  {
 			int middle = (start + end) / 2;
 			prod = products.get(middle);
 			if (prod.getCode() == (code)) {
+				index = middle;
 				found = true;
 			} else if (prod.getCode() > code){
 				end = middle - 1;
@@ -211,18 +213,14 @@ public class Restaurant implements Serializable  {
 
 		}
 
-		prod.setName(name);
-		prod.setCode(code);
-		prod.setDescription(description);
-		prod.setPrice(price);
-		prod.setRestaurantNit(restaurantNit);
+		return index;
 
 	}
 	
 	
-	public void  UpdateClientbyId(String type, String idNumber, String Name, String LastName,
-			int phoneNumber, String adress) {
-
+	public int  UpdateClientbyId(String idNumber
+			) {
+        int index = 0;
 		boolean found = false;
 		int start = 0;
 		int end = clients.size() - 1;
@@ -231,7 +229,10 @@ public class Restaurant implements Serializable  {
 			int middle = (start + end) / 2;
 			cl = clients.get(middle);
 			if (cl.getIdNumber().compareTo(idNumber)== 0) {
+				index = middle;
 				found = true;
+				 
+				
 			} else if (cl.getIdNumber().compareTo(idNumber)>0) {
 				end = middle - 1;
 
@@ -241,12 +242,7 @@ public class Restaurant implements Serializable  {
 
 		}
 
-		cl.setName(Name);
-		cl.setLastName(LastName);
-		cl.setIdNumber(idNumber);
-		cl.setType(type);
-		cl.setPhoneNumber(phoneNumber);
-		cl.setAdress(adress);
+		return index;
 
 	}
 	
