@@ -25,7 +25,7 @@ public class Menu {
 		
 	}
 	
-	public void startMenu() throws InvalidCliendException, InvalidNitException {
+	public void startMenu() throws InvalidCliendException, InvalidNitException, IOException {
 		String menu = getMenuText();
 		int option;
 		do {
@@ -52,7 +52,7 @@ public class Menu {
 		menu +=     "11.Search Client\n" ;
 		menu +=     "12. Show Restaurants\n" ;
 		menu +=     "13.Show Clients\n" ;
-		menu +=     "14.Save Data\n" ;
+		menu +=     "14. Load Data\\n";
 		menu +=     "30.EXIT\n" ;
 		
 		return menu;
@@ -64,47 +64,50 @@ public class Menu {
 		return op;
 	}
 	
-	private void executeOperation(int option) throws InvalidCliendException, InvalidNitException {
+	private void executeOperation(int option) throws InvalidCliendException, InvalidNitException, IOException {
 		switch(option) {
 			case 1: 
 				
 				registerRestaurant();
-				
+				m1.saveRestaurants();
 				break;
 			case 2:
 				registerClient();
+				m1.saveClients();
 				break;
 			case 3: 
 				
 				registerProduct();
-				
+				m1.saveProducts();
 			 break;
 			 
 			case 4:
 				
 				 registerDelivery();
+				 m1.SaveDeliveries();
 				break;
 				
 			case 5:
 				
 				 editRestaurant();
+				m1.saveRestaurants();
 				
 				
 				
-				
+				 
 				
 			 break;
 			 
 			case 6 :
 				
 			     editClient();
-			
+			     m1.saveClients();
 			break;
 			
 			case 7:
 				
 			     editProduct();
-			
+			     m1.saveProducts();
 			
 			
 			
@@ -116,18 +119,25 @@ public class Menu {
 				
 			case 9 :
 				ModifyStateofDelivery();
-				
+				m1.SaveDeliveries();
 			case 11:
 				
 				SearchClientByName();
 				break;
+				
+			case 14:
+				
+				loadProgram();
+				break;
 			
 			case 20:
+				
+				
 				exitProgram();
 				
 			
 				
-			case 19:
+			case 12:
 				
 				if(m1.getRestaurants().isEmpty()) {
 					
@@ -173,7 +183,7 @@ public class Menu {
 		sc.close();
 	}
 	
-	private void registerClient() throws NumberFormatException {
+	private void registerClient() throws NumberFormatException, IOException {
 		
 		System.out.println("Adding Client ...");
 		System.out.println("Please enter your type of document: ");
@@ -198,7 +208,7 @@ public class Menu {
 		
 	}
 	
-	    private void registerRestaurant() throws InvalidNitException {
+	    private void registerRestaurant() throws InvalidNitException, IOException {
 		
 		System.out.println("Adding Restaurant ...");
 		System.out.println("Please enter your restaurant name: ");
@@ -217,10 +227,10 @@ public class Menu {
 		m1.addRestaurant(name,nit,adminName);
 		
 		System.out.println("The restaurant has been registered succesfully");
-		
+		 m1.saveRestaurants();
 	    }
 		
-		private void registerProduct() {
+		private void registerProduct()  {
 			
 			System.out.println("Adding Product ...");
 			
@@ -246,7 +256,7 @@ public class Menu {
 			
 		}
 		
-		private void registerDelivery() throws  InvalidCliendException, InvalidNitException {
+		private void registerDelivery() throws  InvalidCliendException, InvalidNitException, IOException {
 			
 			
 			
@@ -738,6 +748,18 @@ public class Menu {
 			
 			System.out.println("the new status is: " + String.valueOf( r1.getDeliveries().get(deliveryIndex).getOrderState() ));
 			
+		}
+	    private void loadProgram() {
+			System.out.println("Loading data ...");
+			try{
+				m1.loadData("rest");
+				m1.loadData("client");
+				m1.loadData("products");
+				m1.loadData("orders");
+				System.out.println("The program data were loaded succesfully");
+			}catch(IOException | ClassNotFoundException e){
+				System.out.println("The data can't be load");
+			}
 		}
 		
 		

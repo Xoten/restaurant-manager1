@@ -1,10 +1,13 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -39,6 +42,22 @@ public class Manager {
 		RestaurantNameComparator nc = new RestaurantNameComparator();
 		Collections.sort(restaurant,nc);
 		
+	}
+	
+	public void sortByRestaurantNameBubble() {	
+		Restaurant temp;
+		boolean sorted = false;
+		while (!sorted) {
+			sorted = true;
+			for (int i = 0; i < restaurant.size()-1; i++) {
+				if (restaurant.get(i).getName().compareTo(restaurant.get(i + 1).getName()) > 0) {
+					temp = restaurant.get(i);
+					restaurant.set(i, restaurant.get(i + 1));
+					restaurant.set(i + 1, temp);
+					sorted = false;
+				}
+			}
+		}
 	}
 	
 	public void showRestaurant() {
@@ -244,6 +263,57 @@ public class Manager {
 			
 		}
 		pWriter.close();
+	}
+	
+	@SuppressWarnings({ "unchecked", "unused" })
+	public boolean loadData(String type) throws IOException, ClassNotFoundException{
+		File r = new File(SAVE_RESTAURANTS);
+		File c = new File(SAVE_CLIENTS);
+		File p = new File(SAVE_PRODUCTS);
+		File o = new File(SAVE_DELIVERIES);
+		boolean loaded = false;
+		if(r.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(r));
+			if(type.equalsIgnoreCase("rest")) {
+				restaurant = (List<Restaurant>)ois.readObject();
+				loaded = true;
+			}
+			ois.close();	
+		}
+		if(c.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(c));
+			if(type.equalsIgnoreCase("client")) {
+				List<Client> Clients = r1.getClients();
+				
+				Clients = (List<Client>)ois.readObject();
+				loaded = true;
+			}
+			ois.close();		
+		}
+		if(p.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(p));
+			if(type.equalsIgnoreCase("products")) {
+				
+				List<Product> Products = r1.getProduct();
+				Products = (List<Product>)ois.readObject();
+				loaded = true;
+			}
+			ois.close();
+		}
+		if(o.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(o));
+			if(type.equalsIgnoreCase("orders")) {
+				
+				List<Delivery> deliveries = r1.getDeliveries();
+				deliveries = (List<Delivery>)ois.readUnshared();
+				loaded = true;
+			}
+			ois.close();	
+		}
+		else {
+			loaded = false;
+		}
+		return loaded;
 	}
 	
 	
