@@ -1,10 +1,9 @@
 package model;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+
+
+
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,7 +16,6 @@ public class Restaurant implements Serializable  {
 	private List<Client> clients;
 	private List<Product> products;
 	private List<Delivery> deliveries;
-	private final static String SEPARATOR = ";";
 	public Restaurant(String name, int nit, String adminName) {
 
 		this.name = name;
@@ -80,7 +78,7 @@ public class Restaurant implements Serializable  {
 		}else {
 			
 			int i = 0;
-			while(cl.getLastName().compareTo(clients.get(i).getLastName())<0) {
+			while(i<clients.size() && cl.getLastName().compareTo(clients.get(i).getLastName())<0) {
 				i++;
 				if(cl.getLastName().compareTo(clients.get(i).getLastName()) == 0) {
 					int j = 0;
@@ -134,60 +132,9 @@ public class Restaurant implements Serializable  {
 		
 		}
 	
-	public void importClient(String c) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(c));
-		String line = br.readLine();
-		while(line!=null) {
-			String[] parts = line.split(SEPARATOR);
-			String type = parts[0];
-			String idNumber = parts[1];
-			String Name = parts[2];
-			String LastName = parts[3];
-			int phoneNumber = Integer.parseInt(parts[4]);
-			String adress = parts[5];
-			
-			
-			
-		addClient(type, idNumber, Name, LastName, phoneNumber , adress);
-		line = br.readLine();
-		}
-		br.close();
-	}
-	public void importarProduct(String p) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(p));
-		String line = br.readLine();
-		while(line!=null) {
-			String[] parts = line.split(SEPARATOR);
-			int code = Integer.parseInt(parts[0]);
-			String name = parts[1];
-			String description = parts[2];
-			double price = Double.parseDouble(parts[3]);
-			int restaurantNit = Integer.parseInt(parts[4]);
-			addProduct(code,name,description,price,restaurantNit);
-			
-			
-			line = br.readLine();
-		}
-		br.close();
-	}
+	
     
-	public void importDelivery(String pd) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(pd));
-		String line = br.readLine();
-		while(line!=null) {
-			String[] parts = line.split(SEPARATOR);
-			int deliveryCode = Integer.parseInt(parts[0]);
-			int date = Integer.parseInt(parts[1]);
-			int hour = Integer.parseInt(parts[2]);
-			int clientId = Integer.parseInt(parts[3]);
-			int restaurantNit = Integer.parseInt(parts[4]);
-			
-			addDelivery(deliveryCode, date, hour, clientId, restaurantNit);
-			
-			line = br.readLine();
-		}
-		br.close();
-	}
+	
 	
 	
 	public int UpdateProductsByCode(int code)
@@ -249,6 +196,8 @@ public class Restaurant implements Serializable  {
 	
 	
 	
+	
+	
 	public String searchProductByRestaurantNit(int nit) {
 		
 		String info = "";
@@ -266,6 +215,24 @@ public class Restaurant implements Serializable  {
 				
 				return info;
 			}
+	public boolean searchClientName(String name, String lastName) {
+        String fullName = "";
+        fullName = name+" "+lastName;
+        boolean found = false;
+        int start = 0;
+        int end = clients.size()-1;
+        while (start <= end && !found) {
+            int middle = (start + end)/2;
+            if (clients.get(middle).getName().equalsIgnoreCase(fullName)) {
+                found = true;
+            } else if(clients.get(middle).getLastName().compareToIgnoreCase(fullName) < 1){
+                end = middle -1;
+            } else {
+                start = middle +1;
+            }
+        }
+        return found;
+    }
 	
 	
 	
