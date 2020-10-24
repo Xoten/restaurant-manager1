@@ -26,7 +26,7 @@ find the documentation here Documentation
 
 ## Changes:
 
--model test fixed( there are two test for each model class)
+- model test fixed( there are two test for each model class)
 -deserialization of data is now fixed.
 - add order  option is fixed
 - exceptions fixed( try and catch added )
