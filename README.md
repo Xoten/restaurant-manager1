@@ -23,6 +23,7 @@ This is coded on java 1.8.0 on windows 10 using Eclipse workspace.
 - updateDelivery method added
 - export deliveries option added.
 - added csv files with data of clients, restaurants and products.
+- import method option added.
 
 ## Changes:
 
