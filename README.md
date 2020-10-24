@@ -17,9 +17,11 @@ find the documentation here Documentation
 - sortOrder method added
 - searchOrder method added
 - updateNit method added
-- uniqueProduct method added
+- uniqueProduct by code method added
+- uniqueOrder by ordercode method added
 - showOrder method added
-- export orders option added.
+- updateDelivery method added
+- export deliveries option added.
 - added csv files with data of clients, restaurants and products.
 
 ## Changes:
@@ -28,6 +30,7 @@ find the documentation here Documentation
 -deserialization of data is now fixed.
 - add order  option is fixed
 - exceptions fixed( try and catch added )
+- addProducts, addOrder, addRestaurant, and addClient method always verify data before add(for example, addRestaurant verify if a nit already exists) 
 
 
 
