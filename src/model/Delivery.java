@@ -17,7 +17,7 @@ public class Delivery implements Serializable {
 	private String clientIdNum;
 	private String restaurantNit;
 	public enum status {REQUESTED, IN_PROCESS, SENT, DELIVERED}
-	public status orderStat;
+	public status deliveryStat;
 	Random random = new Random();
 	private List<Product> deliveries;
 
@@ -27,35 +27,35 @@ public class Delivery implements Serializable {
 		this.date = getDate();
 		this.clientIdNum = ClientIdNum;
 		this.restaurantNit = restNit;
-		this.orderStat = status.REQUESTED;
+		this.deliveryStat = status.REQUESTED;
 		deliveries = new ArrayList<Product>() ;
 
 	}
 
-	public String getOrderStat() {
-		return orderStat.name();
+	public String getDeliveryStat() {
+		return deliveryStat.name();
 	}
 
 	@SuppressWarnings({ "static-access" })
 	public String setOrderStatByCondition(String status) {
 		String info = "";
-		if(getOrderStat().equalsIgnoreCase("REQUESTED")) {
-			setOrderStat(orderStat.IN_PROCESS);
+		if(getDeliveryStat().equalsIgnoreCase("REQUESTED")) {
+			setDeliveryStat(deliveryStat.IN_PROCESS);
 			info += "Order status setted IN PROCESS";
-		} else if (getOrderStat().equalsIgnoreCase("IN_PROCESS")) {
-			setOrderStat(orderStat.SENT);
+		} else if (getDeliveryStat().equalsIgnoreCase("IN_PROCESS")) {
+			setDeliveryStat(deliveryStat.SENT);
 			info += "Order status setted SENT";
-		} else if(getOrderStat().equalsIgnoreCase("SENT")){
-			setOrderStat(orderStat.DELIVERED);
+		} else if(getDeliveryStat().equalsIgnoreCase("SENT")){
+			setDeliveryStat(deliveryStat.DELIVERED);
 			info += "Order status setted DELIVERED";
-		} else if(getOrderStat().equalsIgnoreCase("DELIVERED")) {
+		} else if(getDeliveryStat().equalsIgnoreCase("DELIVERED")) {
 			info += "Order status is DELIVERED, Order closed!";
 		}
 		return info;
 	}
 
-	public void setOrderStat(status orderStat) {
-		this.orderStat = orderStat;
+	public void setDeliveryStat(status orderStat) {
+		this.deliveryStat = orderStat;
 	}
 	
 	public int searchProductInList(String code) {
@@ -125,13 +125,13 @@ public class Delivery implements Serializable {
 
 	public String toString() {
 		String concat = "";
-		concat += "Code: "+code+"\nDate: "+date+"\nClient ID: "+clientIdNum+"\nRestaurant NIT: "+restaurantNit+"\nStatus: "+orderStat+getOrdersList();
+		concat += "Code: "+code+"\nDate: "+date+"\nClient ID: "+clientIdNum+"\nRestaurant NIT: "+restaurantNit+"\nStatus: "+deliveryStat+getOrdersList();
 		return concat;
 	}
 
 	public String getInfo() {
 		String info = "";
-		info += "\nCode: "+code+"\nDate: "+date+"\nClient ID: "+clientIdNum+"\nRestaurant NIT: "+restaurantNit+"\nStatus: "+orderStat+getOrdersList()+"\n";
+		info += "\nCode: "+code+"\nDate: "+date+"\nClient ID: "+clientIdNum+"\nRestaurant NIT: "+restaurantNit+"\nStatus: "+deliveryStat+getOrdersList()+"\n";
 		return info;
 	}
 }

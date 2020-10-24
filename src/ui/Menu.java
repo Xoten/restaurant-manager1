@@ -244,7 +244,7 @@ public class Menu {
 				} catch (IOException e) {
 					System.out.println("Order cant be added!");
 				} 
-				int requestedOrderPos = m1.searchOrder(code);
+				int requestedOrderPos = m1.searchDeliveries(code);
 				do {
 					System.out.println("Enter the code of product for add to order");		
 					System.out.println(m1.searchProductByRestaurant(restNit)); 
@@ -441,7 +441,7 @@ public class Menu {
 				if(m1.uniqueRestaurantNit(nit)) {
 					m1.getRestaurants().get(requested).setNit(nit);
 					m1.updateNitProducts(restNit, nit);
-					m1.updateNitOrders(restNit, nit);
+					m1.updateDeliveriesNit(restNit, nit);
 					System.out.println("Saving data ...");
 					try{
 						m1.saveData("rest");
@@ -504,7 +504,7 @@ public class Menu {
 				String newId = sc.nextLine();
 				if(m1.uniqueClientId(newId)) {
 					m1.getClients().get(requested).setIdNum(newId);		
-					m1.updateClientIdOrders(idNum,newId);	
+					m1.updateClientIdDeliveries(idNum,newId);	
 					System.out.println("Saving data ...");
 					try{
 						m1.saveData("client");
@@ -638,7 +638,7 @@ public class Menu {
 				String code = sc.nextLine();
 				if(m1.uniqueProductCode(code)) {
 					m1.getProducts().get(requested).setCode(code);
-					m1.updateProductOrderCodeFromProduct(pCode,code);
+					m1.updateProductDeliveryCodeFromProduct(pCode,code);
 					System.out.println("Saving data ...");
 					try{
 						m1.saveData("products");
@@ -666,14 +666,14 @@ public class Menu {
 		System.out.println("Please enter the order code to be update: ");
 		String orderCode = sc.nextLine();
 		if (!m1.uniqueOrderCode(orderCode)) {
-			int requested = m1.searchOrder(orderCode);
+			int requested = m1.searchDeliveries(orderCode);
 			boolean statusChanged = false;
 			do {
 				System.out.println("What you want to do?\n1.Delete all order (only for orders when status is requested)\n2.Update order status");
 				int key = Integer.parseInt(sc.nextLine());	
 				switch (key) {
 				case 1:
-					if(m1.getOrders().get(requested).getOrderStat().equalsIgnoreCase("REQUESTED")) {
+					if(m1.getOrders().get(requested).getDeliveryStat().equalsIgnoreCase("REQUESTED")) {
 						m1.getOrders().remove(requested);
 						System.out.println("Order deleted!");
 						statusChanged = true;
@@ -685,7 +685,7 @@ public class Menu {
 					break;
 				case 2:
 					System.out.println("Updating status...");
-					System.out.println(m1.getOrders().get(requested).setOrderStatByCondition(m1.getOrders().get(requested).getOrderStat()));	
+					System.out.println(m1.getOrders().get(requested).setOrderStatByCondition(m1.getOrders().get(requested).getDeliveryStat()));	
 					statusChanged = true;
 					m1.saveData("orders");
 					break;

@@ -182,15 +182,15 @@ public class Manager implements Comparable<Client> {
 	}
 
 	public void exportDeliveries(String separator) throws FileNotFoundException {
-		sortOrder();
+		sortDeliveries();
 		PrintWriter pw = new PrintWriter("data/orders.csv");
 		pw.println("Code"+separator+"Date"+separator+"Client ID"+separator+"Status"+separator+"Restaurant Nit"+separator+"Product code"+separator+"Product quantity");
 		for (int i = 0; i < orders.size(); i++)  {
 			if (orders.get(i).getOrdersProductList().size()==1) 
-				pw.println(orders.get(i).getCode()+separator+orders.get(i).getDate()+separator+orders.get(i).getClientIdNum()+separator+orders.get(i).getOrderStat()+separator+orders.get(i).getRestaurantNit()+separator+orders.get(i).getOrdersProductList().get(0).getInfoToExport(separator));
+				pw.println(orders.get(i).getCode()+separator+orders.get(i).getDate()+separator+orders.get(i).getClientIdNum()+separator+orders.get(i).getDeliveryStat()+separator+orders.get(i).getRestaurantNit()+separator+orders.get(i).getOrdersProductList().get(0).getInfoToExport(separator));
 			if(orders.get(i).getOrdersProductList().size()>1) {	
 				for (int j = 0; j < orders.get(i).getOrdersProductList().size(); j++) {
-					pw.println(orders.get(i).getCode()+separator+orders.get(i).getDate()+separator+orders.get(i).getClientIdNum()+separator+orders.get(i).getOrderStat()+separator+orders.get(i).getRestaurantNit()+separator+orders.get(i).getOrdersProductList().get(j).getInfoToExport(separator));
+					pw.println(orders.get(i).getCode()+separator+orders.get(i).getDate()+separator+orders.get(i).getClientIdNum()+separator+orders.get(i).getDeliveryStat()+separator+orders.get(i).getRestaurantNit()+separator+orders.get(i).getOrdersProductList().get(j).getInfoToExport(separator));
 				}					
 			}
 		}
@@ -216,8 +216,8 @@ public class Manager implements Comparable<Client> {
 	
 	
 	
-	public void sortOrder() {
-		class SortOrder implements Comparator<Delivery>{
+	public void sortDeliveries() {
+		class Sortdeliveries implements Comparator<Delivery>{
 			@Override
 			public int compare(Delivery o1, Delivery o2) {
 				int value1 = 0, value2 = 0;
@@ -234,7 +234,7 @@ public class Manager implements Comparable<Client> {
 				return value1;
 			}
 		}
-		Collections.sort(orders, new SortOrder());
+		Collections.sort(orders, new Sortdeliveries());
 	}
 
 
@@ -334,7 +334,7 @@ public class Manager implements Comparable<Client> {
 		return found;
 	}
 	
-	public int searchOrder(String orderCode) throws NullCodeException{
+	public int searchDeliveries(String orderCode) throws NullCodeException{
 		int position = 0;
 		boolean found = !false;
 		for(int i=0; i<orders.size() && found; i++){
@@ -365,7 +365,7 @@ public class Manager implements Comparable<Client> {
 		}
 	}
 	
-	public void updateNitOrders(String OldNit, String NewNit) {
+	public void updateDeliveriesNit(String OldNit, String NewNit) {
 		for (int i = 0; i < orders.size(); i++) {
 			if(orders.get(i).getRestaurantNit().equalsIgnoreCase(OldNit)) {
 				orders.get(i).setRestaurantNit(NewNit);
@@ -373,7 +373,7 @@ public class Manager implements Comparable<Client> {
 		}
 	}
 	
-	public void updateClientIdOrders(String OldId, String NewId) {
+	public void updateClientIdDeliveries(String OldId, String NewId) {
 		for (int i = 0; i < orders.size(); i++) {
 			if(orders.get(i).getClientIdNum().equalsIgnoreCase(OldId)) {
 				orders.get(i).setClientIdNum(NewId);
@@ -381,7 +381,7 @@ public class Manager implements Comparable<Client> {
 		}
 	}
 	
-	public void updateProductOrderCodeFromProduct(String oldCode, String newCode) {
+	public void updateProductDeliveryCodeFromProduct(String oldCode, String newCode) {
 		for (int i = 0; i < orders.size(); i++) {
 			orders.get(i).updateProductsCode(oldCode, newCode);
 		}
