@@ -5,7 +5,7 @@
 This project is a system of deliveries which allows you to manage the information of several restaurants, like products data or deliveries data, you can also import information of clients, deliveries, products or restaurants
 
 This is coded on java 1.8.0 on windows 10 using Eclipse workspace.
-find the documentation here Documentation
+
 
 
 
